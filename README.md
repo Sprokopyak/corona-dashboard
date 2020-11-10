@@ -1,6 +1,6 @@
 ## Documentation
 
-The `PopupService` service can be used to open three types of modal dialogs: [Common popup](#common-popup), `Alert popup`, `Confirm poup`.
+The `PopupService` service can be used to open three types of modal dialogs: [`Common popup`](#common-popup), `Alert popup`, `Confirm poup`.
 
 #### Properties
 
