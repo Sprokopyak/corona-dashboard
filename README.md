@@ -31,7 +31,7 @@ To create a new popup, you need to provide a config for it. Here is `PopupConfig
 | visibility: `boolean` | Whether button is visible to user |
 | label: `string` | Text of the button, will be automatically translated if for such text is the translation in `locale` file |
 | class?: `string` | Class of the button |
-| value: `string | PopupButtonValueEnum` | Identifier of the button, if the user clicked some button and popup was closed, you will know in the popup result by this `value` which button was clicked. Can be used custom identifier or [`PopupButtonValueEnum`](#popupButtonValueEnum) |
+| value: `'string | PopupButtonValueEnum'` | Identifier of the button, if the user clicked some button and popup was closed, you will know in the popup result by this `value` which button was clicked. Can be used custom identifier or [`PopupButtonValueEnum`](#popupButtonValueEnum) |
  
  #### PopupButtonValueEnum
 | Name | Value |
@@ -108,7 +108,7 @@ const CONFIRM_POPUP_CONFIG: PopupConfig = {
         visibility: true,
         label: 'COMMON.BUTTON.CANCEL',
         value: PopupButtonValueEnum.no,
-        class: 'additional-action btn'
+        class: 'additional-action btn'PopupButtonValueEnum
     }],
     buttonsContainerClass: 'confirm-popup-buttons'
 };
