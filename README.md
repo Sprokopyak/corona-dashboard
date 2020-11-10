@@ -9,7 +9,7 @@ To create a new popup, you need to provide a config for it. Here is `PopupConfig
 | name?: `string` | Unique name of popup, if not provided will be used default - `'MNX_POPUP_ID'` |
 | size?: `PopupSizeEnum` | The size of the popup, [`PopupSizeEnum`](#popupSizeEnum) has some defined `width`, `height` for each size. If you define `width`, `height` of the popup directly in the popup configuration, then this property can be ignored. |
 | title?: `string` | The title of the popup |
-| target?: `string | ComponentType<any>` | Popup content can be used some text, which will be automatically translated if for such text is the translation in `locale` file or here can be used `Component` |
+| target?: `string or ComponentType<any>` | Popup content can be used some text, which will be automatically translated if for such text is the translation in `locale` file or here can be used `Component` |
 | buttons?: `PopupButtonConfig[]` | Config of the buttons which will be displayed on the popup, more details are [`here`](#popupButtonConfig) |
 | buttonsContainerClass?: `string` | Container class of the popup buttons |
 | width?: `number` | Width of the popup |
@@ -31,7 +31,7 @@ To create a new popup, you need to provide a config for it. Here is `PopupConfig
 | visibility: `boolean` | Whether button is visible to user |
 | label: `string` | Text of the button, will be automatically translated if for such text is the translation in `locale` file |
 | class?: `string` | Class of the button |
-| value: `'string | PopupButtonValueEnum'` | Identifier of the button, if the user clicked some button and popup was closed, you will know in the popup result by this `value` which button was clicked. Can be used custom identifier or [`PopupButtonValueEnum`](#popupButtonValueEnum) |
+| value: `string or PopupButtonValueEnum` | Identifier of the button, if the user clicked some button and popup was closed, you will know in the popup result by this `value` which button was clicked. Can be used custom identifier or [`PopupButtonValueEnum`](#popupButtonValueEnum) |
  
  #### PopupButtonValueEnum
 | Name | Value |
