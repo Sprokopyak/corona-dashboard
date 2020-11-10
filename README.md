@@ -40,7 +40,8 @@ To create a new popup, you need to provide a config for it. Here is `PopupConfig
 | yes | `'YES'` |
 | no | `'NO'` |
 | close | `'CLOSE'` |
- 
+
+ ---
 ### Common popup
 Popup has a default config:
 ```
@@ -50,7 +51,7 @@ const BASE_POPUP_CONFIG: PopupConfig = {
     buttons: []
 };
 ```
-A dialog is opened by calling the `openPopup` method with a [`PopupConfig`](#popupConfig) as first argument and optional popupData as second argument. Second argument will be used, only when you use in [`target`](#target) propery `Component`
+A dialog is opened by calling the `openPopup` method with a [`PopupConfig`](#popupConfig) as first argument and optional popupData as second argument. Second argument will be used, only when you use in [`PopupConfig`](#popupConfig) `target` propery as `Component`.
 
 ```
 const data = new Map<string, any>();
@@ -64,7 +65,7 @@ this.popupService.resultDefault(result => {
     console.log(result);
 });
 ```
-
+---
 ### Alert popup
 Popup has a default config:
 ```
@@ -81,4 +82,44 @@ const ALERT_POPUP_CONFIG: PopupConfig = {
 };
 ```
 
-A dialog is opened by calling the `openAlert` method with a [`PopupConfig`](#popupConfig) as first argument and optional popupData as second argument.
+A dialog is opened by calling the `openAlert` method with a [`PopupConfig`](#popupConfig) as first argument.
+
+```
+this.popupService.openAlert(ALERT_POPUP);
+this.popupService.resultDefault(result => {
+    console.log(result);
+});
+```
+
+---
+### Confirm poup
+Popup has a default config:
+```
+const CONFIRM_POPUP_CONFIG: PopupConfig = {
+    name: DEFAULT_POPUP_ID,
+    size : PopupSizeEnum.confirm,
+    iconClass: 'popup-icon info',
+    buttons: [{
+        visibility: true,
+        label: 'COMMON.BUTTON.CONFIRM',
+        value: PopupButtonValueEnum.yes,
+        class: 'action btn'
+    }, {
+        visibility: true,
+        label: 'COMMON.BUTTON.CANCEL',
+        value: PopupButtonValueEnum.no,
+        class: 'additional-action btn'
+    }],
+    buttonsContainerClass: 'confirm-popup-buttons'
+};
+```
+
+A dialog is opened by calling the `openConfirm` method with a [`PopupConfig`](#popupConfig) as first argument.
+
+```
+this.popupService.openConfirm(CONFRIM_POPUP);
+this.popupService.resultDefault(result => {
+    console.log(result);
+});
+```
+---
