@@ -1,55 +1,84 @@
 ## Documentation
 
-The `PopupService` service can be used to open three types of modal dialogs: [`Common popup`](#common-popup), `Alert popup`, `Confirm poup`.
+The `PopupService` service can be used to open three types of modal dialogs: [`Common popup`](#common-popup), [`Alert popup`](#alert-popup), [`Confirm poup`](#confirm-poup).
 
-#### Properties
-
+To create a new popup, you need to provide a config for it. Here is `PopupConfig` description: 
+#### PopupConfig 
 | Name | Description |
 | ------ | ------ |
-| @Input() id: string | `id` of Datepicker, if not provided, will be generated automatically from the `label` value |
-| @Input() label: string | `label` of Datepicker, also used for generating `id` if it's not provided |
-| @Input() selectedDate: Moment | Default selected date |
-| @Input() monthYearMode: boolean | Whether have the ability to select only month and year in Datepicker |
-| @Input() format: string | Format of date displayed in Datepicker |
-| @Input() skipWeekends: boolean | Whether disable weekends and have the ability to select only working days |
-| @Input() minAllowedValue: Moment | Min allowed date to select in Datepicker |
-| @Input() maxAllowedValue: Moment | Max allowed date to select in Datepicker |
-| @Input() disabledValues: Moment[] | Dates which are disabled in Datepicker |
-| @Input() enabledValues: Moment[] | Dates which are enabled in Datepicker, all others will be disabled |
-| @Input() todayFormat: string | Format of displayed today day in Datepicker |
-| @Output() dateChange = new EventEmitter<Moment>() | Listen on date changes |
-#### Properties
+| name?: `string` | Unique name of popup, if not provided will be used default - `'MNX_POPUP_ID'` |
+| size?: `PopupSizeEnum` | The size of the popup, [`PopupSizeEnum`](#popupSizeEnum) has some defined `width`, `height` for each size. If you define `width`, `height` of the popup directly in the popup configuration, then this property can be ignored. |
+| title?: `string` | The title of the popup |
+| target?: `string | ComponentType<any>` | Popup content can be used some text, which will be automatically translated if for such text is the translation in `locale` file or here can be used `Component` |
+| buttons?: `PopupButtonConfig[]` | Config of the buttons which will be displayed on the popup, more details are [`here`](#popupButtonConfig) |
+| buttonsContainerClass?: `string` | Container class of the popup buttons |
+| width?: `number` | Width of the popup |
+| height?: `number` | Height of the popup |
+| iconClass?: `string` | Class of the icon which will be displayed near the popup title |
+| fullContentWidth?: `boolean` | Whether content should take full width of popup content container |
 
-| Name | Description |
+#### PopupSizeEnum
+| Name | Value |
 | ------ | ------ |
-| @Input() id: string | `id` of Datepicker, if not provided, will be generated automatically from the `label` value |
-| @Input() label: string | `label` of Datepicker, also used for generating `id` if it's not provided |
-| @Input() selectedDate: Moment | Default selected date |
-| @Input() monthYearMode: boolean | Whether have the ability to select only month and year in Datepicker |
-| @Input() format: string | Format of date displayed in Datepicker |
-| @Input() skipWeekends: boolean | Whether disable weekends and have the ability to select only working days |
-| @Input() minAllowedValue: Moment | Min allowed date to select in Datepicker |
-| @Input() maxAllowedValue: Moment | Max allowed date to select in Datepicker |
-| @Input() disabledValues: Moment[] | Dates which are disabled in Datepicker |
-| @Input() enabledValues: Moment[] | Dates which are enabled in Datepicker, all others will be disabled |
-| @Input() todayFormat: string | Format of displayed today day in Datepicker |
-| @Output() dateChange = new EventEmitter<Moment>() | Listen on date changes |
+| small | `width: 300, height: 150` |
+| medium | `width: 500, height: 250` |
+| large | `width: 700, height: 350` |
+| confirm | `width: 600, height: 150` |
+ 
+ #### PopupButtonConfig
+ | Name | Description |
+| ------ | ------ |
+| visibility: `boolean` | Whether button is visible to user |
+| label: `string` | Text of the button, will be automatically translated if for such text is the translation in `locale` file |
+| class?: `string` | Class of the button |
+| value: `string | PopupButtonValueEnum` | Identifier of the button, if the user clicked some button and popup was closed, you will know in the popup result by this `value` which button was clicked. Can be used custom identifier or [`PopupButtonValueEnum`](#popupButtonValueEnum) |
+ 
+ #### PopupButtonValueEnum
+| Name | Value |
+| ------ | ------ |
+| ok | `'OK'` |
+| yes | `'YES'` |
+| no | `'NO'` |
+| close | `'CLOSE'` |
  
 ### Common popup
+Popup has a default config:
+```
+const BASE_POPUP_CONFIG: PopupConfig = {
+    name: DEFAULT_POPUP_ID,
+    size: PopupSizeEnum.small,
+    buttons: []
+};
+```
+A dialog is opened by calling the `openPopup` method with a [`PopupConfig`](#popupConfig) as first argument and optional popupData as second argument. Second argument will be used, only when you use in [`target`](#target) propery `Component`
 
-#### Properties
+```
+const data = new Map<string, any>();
+data.set('label', 'Label from popup');
+this.popupService.openPopup(BASE_POPUP, data);
+```
 
-| Name | Description |
-| ------ | ------ |
-| @Input() id: string | `id` of Datepicker, if not provided, will be generated automatically from the `label` value |
-| @Input() label: string | `label` of Datepicker, also used for generating `id` if it's not provided |
-| @Input() selectedDate: Moment | Default selected date |
-| @Input() monthYearMode: boolean | Whether have the ability to select only month and year in Datepicker |
-| @Input() format: string | Format of date displayed in Datepicker |
-| @Input() skipWeekends: boolean | Whether disable weekends and have the ability to select only working days |
-| @Input() minAllowedValue: Moment | Min allowed date to select in Datepicker |
-| @Input() maxAllowedValue: Moment | Max allowed date to select in Datepicker |
-| @Input() disabledValues: Moment[] | Dates which are disabled in Datepicker |
-| @Input() enabledValues: Moment[] | Dates which are enabled in Datepicker, all others will be disabled |
-| @Input() todayFormat: string | Format of displayed today day in Datepicker |
-| @Output() dateChange = new EventEmitter<Moment>() | Listen on date changes |
+To get the result of popup call:
+```
+this.popupService.resultDefault(result => {
+    console.log(result);
+});
+```
+
+### Alert popup
+Popup has a default config:
+```
+const ALERT_POPUP_CONFIG: PopupConfig = {
+    name: DEFAULT_POPUP_ID,
+    size : PopupSizeEnum.small,
+    buttons: [{
+        visibility: true,
+        label: 'OK',
+        value: PopupButtonValueEnum.ok,
+        class: 'action btn'
+    }],
+    buttonsContainerClass: 'alert-popup-buttons'
+};
+```
+
+A dialog is opened by calling the `openAlert` method with a [`PopupConfig`](#popupConfig) as first argument and optional popupData as second argument.
